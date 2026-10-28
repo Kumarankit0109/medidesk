@@ -27,5 +27,8 @@ jobs:
       - name: Make Maven wrapper executable
         run: chmod +x mvnw
 
-      - name: Build MediDesk
+      - name: Build MediDesk with Maven
         run: ./mvnw --batch-mode --no-transfer-progress package -DskipTests
+
+      - name: Build Docker image
+        run: docker build --tag medidesk:ci .
