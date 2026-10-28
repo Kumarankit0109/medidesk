@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment | MediDesk</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<main class="page appointment-page">
+    <a th:href="@{/doctors.html}">← Back to doctors</a>
+
+    <h1>Request an appointment</h1>
+    <p>
+        Selected doctor:
+        <strong th:text="${doctor.fullName}">Doctor name</strong>
+        (<span th:text="${doctor.specialty}">Specialty</span>)
+    </p>
+
+    <p class="appointment-error" th:if="${error}" th:text="${error}"></p>
+
+    <form class="appointment-form" th:action="@{/appointments}" method="post">
+        <input type="hidden" name="doctorId" th:value="${doctor.id}">
+
+        <label for="appointmentTime">Appointment date and time</label>
+        <input id="appointmentTime" name="appointmentTime"
+               type="datetime-local" required>
+
+        <label for="reason">Reason for visit</label>
+        <textarea id="reason" name="reason" rows="4"
+                  maxlength="500" required></textarea>
+
+        <button type="submit">Request appointment</button>
+    </form>
+</main>
+</body>
+</html>

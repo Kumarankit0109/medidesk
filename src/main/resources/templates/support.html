@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support | MediDesk</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<main class="page support-page">
+    <a th:href="@{/dashboard.html}">← Dashboard</a>
+
+    <h1>Support requests</h1>
+    <p>Send a message to the clinic support team.</p>
+
+    <p class="support-message" th:if="${param.submitted}">
+        Your support request was submitted.
+    </p>
+    <p class="support-message" th:if="${error}" th:text="${error}"></p>
+
+    <form class="support-form" th:action="@{/support}" method="post"
+          enctype="multipart/form-data">
+        <label for="subject">Subject</label>
+        <input id="subject" name="subject" type="text"
+               maxlength="120" required>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5"
+                  maxlength="2000" required></textarea>
+
+        <label for="attachment">Attachment (optional)</label>
+        <input id="attachment" name="attachment" type="file"
+               accept=".pdf,.png,.jpg,.jpeg">
+
+        <p class="support-hint">Allowed file types: PDF, PNG, JPG, JPEG. Maximum size: 5 MB.</p>
+
+        <button type="submit">Submit support request</button>
+    </form>
+
+    <section class="ticket-list">
+        <h2>Your previous requests</h2>
+
+        <p th:if="${#lists.isEmpty(tickets)}">
+            You have not submitted any support requests yet.
+        </p>
+
+        <article class="ticket-card" th:each="ticket : ${tickets}">
+            <div class="ticket-heading">
+                <h3 th:text="${ticket.subject}">Ticket subject</h3>
+                <span class="status-badge" th:text="${ticket.status}">OPEN</span>
+            </div>
+
+            <p th:text="${ticket.message}">Ticket message</p>
+
+            <p th:if="${ticket.attachmentOriginalName != null}">
+                Attachment:
+                <span th:text="${ticket.attachmentOriginalName}">file.pdf</span>
+            </p>
+        </article>
+    </section>
+</main>
+</body>
+</html>

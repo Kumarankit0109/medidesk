@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Appointments | MediDesk</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<main class="page appointments-page">
+    <a th:href="@{/dashboard.html}">← Dashboard</a>
+
+    <h1>My appointments</h1>
+    <p>View the appointment requests linked to your account.</p>
+
+    <p class="appointment-success" th:if="${param.booked}">
+        Your appointment request was saved.
+    </p>
+
+    <p th:if="${#lists.isEmpty(appointments)}">
+        You don’t have any appointment requests yet.
+    </p>
+
+    <div class="appointments-grid" th:unless="${#lists.isEmpty(appointments)}">
+        <article class="appointment-card" th:each="appointment : ${appointments}">
+            <div>
+                <span class="appointment-label">DOCTOR</span>
+                <h2 th:text="${appointment.doctor.fullName}">Doctor name</h2>
+                <p th:text="${appointment.doctor.specialty}">Specialty</p>
+            </div>
+
+            <div class="appointment-detail">
+                <span class="appointment-label">DATE AND TIME</span>
+                <p th:text="${appointment.appointmentTime}">Appointment time</p>
+            </div>
+
+            <div class="appointment-detail">
+                <span class="appointment-label">STATUS</span>
+                <span class="status-badge" th:text="${appointment.status}">
+                    REQUESTED
+                </span>
+            </div>
+
+            <div class="appointment-detail">
+                <span class="appointment-label">REASON</span>
+                <p th:text="${appointment.reason}">Reason for visit</p>
+            </div>
+        </article>
+    </div>
+
+    <a class="appointment-book-link" th:href="@{/doctors.html}">
+        Find a doctor
+    </a>
+</main>
+</body>
+</html>

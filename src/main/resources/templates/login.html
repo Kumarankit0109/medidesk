@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in | MediDesk</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+    <style>
+        .login-form .forgot-password {
+            justify-self: end;
+            margin: -4px 0 2px;
+        }
+
+        .login-form .forgot-password a {
+            color: #8fc7ff;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .login-form .forgot-password a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="login-page">
+
+<section class="login-brand">
+    <a class="brand-name" th:href="@{/}">
+        <span class="brand-mark">M</span>
+        <span>MediDesk</span>
+    </a>
+
+    <div class="brand-message">
+        <p class="brand-eyebrow">CLINIC CARE, MADE SIMPLE</p>
+        <h2>Your health,<br><span>all in one place.</span></h2>
+    </div>
+
+    <p class="brand-description">
+        Manage appointments, reminders, and support requests from one secure place.
+    </p>
+</section>
+
+<main class="login-side">
+    <a class="home-link" th:href="@{/}">← Home</a>
+
+    <div class="login-content">
+        <span class="login-badge">PATIENT PORTAL</span>
+        <h1>Welcome back</h1>
+        <p class="login-intro">
+            Sign in to manage your clinic appointments and support.
+        </p>
+
+        <p class="login-message error-message" th:if="${param.error}">
+            Email or password is incorrect. Please try again.
+        </p>
+
+        <p class="login-message success-message" th:if="${param.registered}">
+            Account created. You can now log in.
+        </p>
+
+        <p class="login-message success-message" th:if="${param.reset}">
+            Your password has been reset. You can now log in.
+        </p>
+
+        <form class="login-form" th:action="@{/login}" method="post">
+            <label for="email">EMAIL ADDRESS</label>
+            <input id="email" name="email" type="email"
+                   placeholder="you@example.com"
+                   autocomplete="email" required>
+
+            <label for="password">PASSWORD</label>
+            <input id="password" name="password" type="password"
+                   placeholder="Your password"
+                   autocomplete="current-password" required>
+
+            <p class="forgot-password">
+                <a th:href="@{/forgot-password.html}">Forgot password?</a>
+            </p>
+
+            <button type="submit">Sign in</button>
+        </form>
+
+        <p class="register-prompt">
+            New to MediDesk?
+            <a th:href="@{/register.html}">Create an account</a>
+        </p>
+    </div>
+</main>
+
+</body>
+</html>

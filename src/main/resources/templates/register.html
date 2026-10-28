@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | MediDesk</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body class="register-page">
+
+<section class="login-brand">
+    <a class="brand-name" th:href="@{/}">
+        <span class="brand-mark">M</span>
+        <span>MediDesk</span>
+    </a>
+
+    <div class="brand-message">
+        <p class="brand-eyebrow">YOUR CLINIC, CONNECTED</p>
+        <h2>Care starts<br><span>right here.</span></h2>
+    </div>
+
+    <p class="brand-description">
+        Create your patient account to manage appointments, reminders, and support requests.
+    </p>
+</section>
+
+<main class="login-side">
+    <a class="home-link" th:href="@{/}">← Home</a>
+
+    <div class="login-content">
+        <span class="login-badge">PATIENT REGISTRATION</span>
+        <h1>Create your account</h1>
+        <p class="login-intro">It only takes a moment to get started.</p>
+
+        <p class="login-message error-message" th:if="${param.error}">
+            An account with this email may already exist. Please try another.
+        </p>
+
+        <form class="login-form" th:action="@{/register}" method="post">
+            <label for="fullName">FULL NAME</label>
+            <input id="fullName" name="fullName" type="text"
+                   placeholder="Your full name"
+                   autocomplete="name" maxlength="80" required>
+
+            <label for="email">EMAIL ADDRESS</label>
+            <input id="email" name="email" type="email"
+                   placeholder="you@example.com"
+                   autocomplete="email" maxlength="150" required>
+
+            <label for="password">PASSWORD</label>
+            <input id="password" name="password" type="password"
+                   placeholder="At least 8 characters"
+                   autocomplete="new-password" minlength="8" required>
+
+            <button type="submit">Create account</button>
+        </form>
+
+        <p class="register-prompt">
+            Already registered?
+            <a th:href="@{/login.html}">Sign in</a>
+        </p>
+    </div>
+</main>
+
+</body>
+</html>

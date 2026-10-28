@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | MediDesk</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+    <style>
+        body.dashboard-page {
+            display: block;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            color: #eef5ff;
+            background: #1e2022;
+            font-family: Arial, sans-serif;
+        }
+
+        .dashboard-container {
+            width: min(1180px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        .dashboard-nav {
+            min-height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            border-bottom: 1px solid #174577;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #eef5ff;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            color: white;
+            background: #216ac0;
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a,
+        .dashboard-link {
+            color: #8ec4ff;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover,
+        .dashboard-link:hover {
+            color: #c5e2ff;
+        }
+
+        .logout-form {
+            margin: 0;
+        }
+
+        .logout-button,
+        .primary-link {
+            display: inline-block;
+            padding: 11px 18px;
+            border: 0;
+            border-radius: 9px;
+            color: #fff;
+            background: #1763ad;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logout-button:hover,
+        .primary-link:hover {
+            background: #287bd0;
+        }
+
+        .dashboard-hero {
+            margin: 34px 0 44px;
+            padding: 48px 54px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+            border-radius: 24px;
+            background: linear-gradient(115deg, #123d6b, #2168b7);
+        }
+
+        .eyebrow {
+            margin: 0 0 14px;
+            color: #8dc7ff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .dashboard-hero h1 {
+            margin: 0;
+            color: #f3f7fc;
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            line-height: 1.1;
+        }
+
+        .dashboard-hero p:last-child {
+            margin: 18px 0 0;
+            line-height: 1.6;
+        }
+
+        .hero-button {
+            flex: 0 0 auto;
+            padding: 15px 22px;
+            border-radius: 10px;
+            color: #8fc7ff;
+            background: #171a1d;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .section-heading {
+            margin-bottom: 24px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            color: #9bcaff;
+            font-size: 30px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            padding-bottom: 38px;
+        }
+
+        .dashboard-card {
+            min-height: 245px;
+            padding: 24px;
+            border: 1px solid #174577;
+            border-radius: 18px;
+            background: #181a1c;
+        }
+
+        .card-number {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 18px;
+            border-radius: 13px;
+            color: #8fc7ff;
+            background: #222629;
+            font-weight: 700;
+        }
+
+        .card-label {
+            margin: 0 0 10px;
+            color: #61aaff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .dashboard-card h3 {
+            margin: 0 0 12px;
+            color: #a4cefa;
+            font-size: 21px;
+        }
+
+        .dashboard-card p {
+            color: #b7cce0;
+            line-height: 1.6;
+        }
+
+        .card-actions {
+            display: grid;
+            justify-items: start;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .reminder-item {
+            margin-top: 14px;
+            padding: 14px;
+            border: 1px solid #24476b;
+            border-radius: 12px;
+            background: #1d2227;
+        }
+
+        .reminder-item strong {
+            color: #d8eaff;
+            line-height: 1.5;
+        }
+
+        .reminder-item p {
+            margin: 8px 0 0;
+            font-size: 14px;
+        }
+
+        .dashboard-footer {
+            padding: 22px 0 30px;
+            border-top: 1px solid #174577;
+            color: #8db7df;
+            font-size: 14px;
+        }
+
+        @media (max-width: 800px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-hero {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 34px 28px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .dashboard-container {
+                width: min(100% - 32px, 1180px);
+            }
+
+            .dashboard-nav {
+                align-items: flex-start;
+                flex-wrap: wrap;
+                padding: 18px 0;
+            }
+
+            .nav-links {
+                width: 100%;
+                order: 3;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .dashboard-hero {
+                margin-top: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body class="dashboard-page">
+<div class="dashboard-container">
+
+    <header class="dashboard-nav">
+        <a class="brand" th:href="@{/}">
+            <span class="brand-mark">M</span>
+            <span>MediDesk</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Main navigation">
+            <a th:href="@{/doctors.html}">Find a doctor</a>
+            <a th:href="@{/appointments.html}">My appointments</a>
+            <a th:href="@{/support.html}">Support</a>
+        </nav>
+
+        <form class="logout-form" th:action="@{/logout}" method="post">
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}">
+            <button class="logout-button" type="submit">Log out</button>
+        </form>
+    </header>
+
+    <main>
+        <section class="dashboard-hero">
+            <div>
+                <p class="eyebrow">Patient portal</p>
+                <h1>Your care, organised.</h1>
+                <p>
+                    Welcome back,
+                    <strong th:text="${email}">your email</strong>.
+                    Manage your clinic visits and support in one place.
+                </p>
+            </div>
+
+            <a class="hero-button" th:href="@{/doctors.html}">
+                Book an appointment &nbsp; →
+            </a>
+        </section>
+
+        <section aria-labelledby="dashboard-section-title">
+            <div class="section-heading">
+                <p class="eyebrow">Your MediDesk</p>
+                <h2 id="dashboard-section-title">What would you like to do?</h2>
+            </div>
+
+            <div class="dashboard-grid">
+                <article class="dashboard-card">
+                    <div class="card-number">01</div>
+                    <p class="card-label">Appointments</p>
+                    <h3>Plan a clinic visit</h3>
+                    <p>Choose a doctor and request an appointment.</p>
+                    <div class="card-actions">
+                        <a class="dashboard-link" th:href="@{/doctors.html}">
+                            Find a doctor →
+                        </a>
+                        <a class="dashboard-link" th:href="@{/appointments.html}">
+                            View my appointments
+                        </a>
+                    </div>
+                </article>
+
+                <article class="dashboard-card">
+                    <div class="card-number">02</div>
+                    <p class="card-label">Reminders</p>
+                    <h3>Keep dates in view</h3>
+
+                    <p th:if="${#lists.isEmpty(upcomingAppointments)}">
+                        No upcoming appointments yet.
+                    </p>
+
+                    <div th:each="appointment : ${upcomingAppointments}"
+                         class="reminder-item">
+                        <strong th:text="${appointment.appointmentTime}">
+                            Appointment date and time
+                        </strong>
+                        <p>
+                            Reason:
+                            <span th:text="${appointment.reason}">
+                                Appointment reason
+                            </span>
+                        </p>
+                    </div>
+                </article>
+
+                <article class="dashboard-card">
+                    <div class="card-number">03</div>
+                    <p class="card-label">Support</p>
+                    <h3>Get help when you need it</h3>
+                    <p>Submit a question and track your support requests.</p>
+                    <div class="card-actions">
+                        <a class="dashboard-link" th:href="@{/support.html}">
+                            Open support →
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="dashboard-footer">
+        MediDesk &nbsp;·&nbsp; Clinic appointments and support
+    </footer>
+</div>
+</body>
+</html>

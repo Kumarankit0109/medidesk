@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors | MediDesk</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<main class="page doctors-page">
+    <a th:href="@{/dashboard.html}">← Dashboard</a>
+
+    <h1>Find a doctor</h1>
+    <p>Choose a doctor to continue to appointment booking.</p>
+
+    <div class="doctor-grid">
+        <article class="doctor-card" th:each="doctor : ${doctors}">
+            <div class="doctor-avatar">DR</div>
+
+            <div class="doctor-info">
+                <h2 th:text="${doctor.fullName}">Doctor name</h2>
+                <p th:text="${doctor.specialty}">Specialty</p>
+                <span class="doctor-status">Available</span>
+            </div>
+
+            <a class="doctor-button"
+               th:href="@{/appointments/new(doctorId=${doctor.id})}">
+                Book appointment
+            </a>
+        </article>
+    </div>
+</main>
+</body>
+</html>
