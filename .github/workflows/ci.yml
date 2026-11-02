@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: "21"
           cache: maven
 
       - name: Make Maven wrapper executable
@@ -42,7 +42,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker image and publish on main
+      - name: Build and publish Docker image
         uses: docker/build-push-action@v7
         with:
           context: .
@@ -50,3 +50,59 @@ jobs:
           tags: |
             ghcr.io/kumarankit0109/medidesk:latest
             ghcr.io/kumarankit0109/medidesk:${{ github.sha }}
+
+  deploy-to-ec2:
+    needs: build-and-publish
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Get temporary AWS credentials through GitHub OIDC
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ap-south-1
+
+      - name: Update MediDesk on EC2 through Systems Manager
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          command_id=$(aws ssm send-command \
+            --instance-ids i-07680f53e45152472 \
+            --document-name AWS-RunShellScript \
+            --parameters 'commands=["sudo -u ec2-user -H bash -lc \"cd /home/ec2-user/medidesk && docker compose pull app && docker compose up -d app\""]' \
+            --query 'Command.CommandId' \
+            --output text)
+
+          echo "Systems Manager command: $command_id"
+
+          for attempt in {1..36}; do
+            status=$(aws ssm get-command-invocation \
+              --command-id "$command_id" \
+              --instance-id i-07680f53e45152472 \
+              --query 'Status' \
+              --output text 2>/dev/null || true)
+
+            if [ "$status" = "Success" ]; then
+              echo "MediDesk deployment succeeded."
+              exit 0
+            fi
+
+            if [[ "$status" == "Failed" || "$status" == "Cancelled" || "$status" == "TimedOut" ]]; then
+              aws ssm get-command-invocation \
+                --command-id "$command_id" \
+                --instance-id i-07680f53e45152472 \
+                --query '{Status:Status,Output:StandardOutputContent,Error:StandardErrorContent}' \
+                --output json || true
+              exit 1
+            fi
+
+            sleep 5
+          done
+
+          echo "Timed out waiting for the EC2 deployment command."
+          exit 1
