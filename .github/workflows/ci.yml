@@ -101,7 +101,7 @@ jobs:
           command_id=$(aws ssm send-command \
             --instance-ids i-07680f53e45152472 \
             --document-name AWS-RunShellScript \
-            --parameters 'commands=["cd /home/ec2-user/medidesk && docker compose pull app && docker compose up -d app"]' \
+            --parameters 'commands=["sudo -u ec2-user -H env DOCKER_CONFIG=/home/ec2-user/.docker docker compose -f /home/ec2-user/medidesk/docker-compose.yml pull app","sudo -u ec2-user -H env DOCKER_CONFIG=/home/ec2-user/.docker docker compose -f /home/ec2-user/medidesk/docker-compose.yml up -d app"]' \
             --query 'Command.CommandId' \
             --output text)
 
