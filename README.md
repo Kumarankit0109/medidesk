@@ -643,7 +643,4 @@ This project is developed for academic and educational purposes.
 
 ---
 
-\<p align="center">
-&#x20; \<strong>MediDesk\</strong>\<br>
-&#x20; Building and Deploying Healthcare Applications with DevOps and Cloud Computing.
-\</p>
+\<p align="center">   \<strong>MediDesk\</strong>\<br>   Building and Deploying Healthcare Applications with DevOps and Cloud Computing. \</p>
