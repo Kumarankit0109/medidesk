@@ -1,6 +1,5 @@
-# MediDesk – Dockerized Healthcare Application on AWS
-
 <p align="center">
+  # MediDesk – Dockerized Healthcare Application on AWS
   <strong>A Spring Boot Healthcare Application with Docker, GitHub Actions CI/CD and AWS EC2</strong>
 </p>
 
