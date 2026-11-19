@@ -455,12 +455,18 @@ The following improvements can make MediDesk more scalable and reliable:
 
 ---
 
-## 👨‍💻 Project Contributors
+## 👨‍💻 Project Development Team
 
-| Name | Role |
+MediDesk is a collaborative group project developed and implemented by **Gaurav Yadav and Kumar Ankit**.
+
+Both team members contributed to the project development, implementation, and deployment activities, including application development, Docker containerization, DevOps automation, and AWS cloud deployment.
+
+| Contributor | Role |
 |---|---|
-| Kumar Ankit | Project Contributor |
-| Gaurav Yadav | Project Contributor |
+| Gaurav Yadav | Project Developer |
+| Kumar Ankit | Project Developer |
+
+**Project Title:** MediDesk – A Dockerized Healthcare Application Deployed on AWS
 
 ---
 
