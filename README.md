@@ -1,8 +1,17 @@
 # MediDesk – Dockerized Healthcare Application on AWS
 
-\<p align="center">   \<strong>A Spring Boot Healthcare Application with Docker, GitHub Actions CI/CD and AWS EC2\</strong> \</p>
+<p align="center">
+  <b>A Java Spring Boot Application with Docker, GitHub Actions CI/CD and AWS EC2 Deployment</b>
+</p>
 
-\<p align="center">   \<img src="[https://img.shields.io/badge/Java-21-orange?logo=openjdk](https://img.shields.io/badge/Java-21-orange?logo=openjdk)" />   \<img src="[https://img.shields.io/badge/Spring%20Boot-Backend-brightgreen?logo=springboot](https://img.shields.io/badge/Spring%20Boot-Backend-brightgreen?logo=springboot)" />   \<img src="[https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql)" />   \<img src="[https://img.shields.io/badge/Docker-Containerized-blue?logo=docker](https://img.shields.io/badge/Docker-Containerized-blue?logo=docker)" />   \<img src="[https://img.shields.io/badge/AWS-EC2-orange?logo=amazonaws](https://img.shields.io/badge/AWS-EC2-orange?logo=amazonaws)" />   \<img src="[https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-black?logo=githubactions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-black?logo=githubactions)" /> \</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/Java-21-orange?logo=openjdk" />
+  <img src="https://img.shields.io/badge/Spring%20Boot-Framework-brightgreen?logo=springboot" />
+  <img src="https://img.shields.io/badge/MySQL-8-blue?logo=mysql" />
+  <img src="https://img.shields.io/badge/Docker-Containerized-blue?logo=docker" />
+  <img src="https://img.shields.io/badge/AWS-EC2-orange?logo=amazonaws" />
+  <img src="https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-black?logo=githubactions" />
+</p>
 
 ---
 
