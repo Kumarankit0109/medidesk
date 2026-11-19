@@ -592,10 +592,14 @@ Through this project, we gained practical experience in:
 - AWS Systems Manager remote deployment.
 - Environment-based configuration and credential management.
 
----
+------
 
 ## License
 
 This project is developed for academic and educational purposes.
 
-<p align="center">   \<strong>MediDesk\</strong>\<br>   Building and Deploying Healthcare Applications with DevOps and Cloud Computing. </p>
+<p align="center">
+  <strong>MediDesk</strong><br>
+  Building and Deploying Healthcare Applications with DevOps and Cloud Computing.
+</p>
+
