@@ -1,17 +1,8 @@
 # MediDesk – Dockerized Healthcare Application on AWS
 
-<p align="center">
-  <b>A Java Spring Boot Application with Docker, GitHub Actions CI/CD and AWS EC2 Deployment</b>
-</p>
+\<p align="center">   \<strong>A Spring Boot Healthcare Application with Docker, GitHub Actions CI/CD and AWS EC2\</strong> \</p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Java-21-orange?logo=openjdk" />
-  <img src="https://img.shields.io/badge/Spring%20Boot-Framework-brightgreen?logo=springboot" />
-  <img src="https://img.shields.io/badge/MySQL-8-blue?logo=mysql" />
-  <img src="https://img.shields.io/badge/Docker-Containerized-blue?logo=docker" />
-  <img src="https://img.shields.io/badge/AWS-EC2-orange?logo=amazonaws" />
-  <img src="https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-black?logo=githubactions" />
-</p>
+\<p align="center">   ![Java]\([https://img.shields.io/badge/Java-21-orange?logo=openjdk](https://img.shields.io/badge/Java-21-orange?logo=openjdk))   ![Spring Boot]\([https://img.shields.io/badge/Spring%20Boot-Backend-brightgreen?logo=springboot](https://img.shields.io/badge/Spring%20Boot-Backend-brightgreen?logo=springboot))   ![MySQL]\([https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql))   ![Docker]\([https://img.shields.io/badge/Docker-Containerization-blue?logo=docker](https://img.shields.io/badge/Docker-Containerization-blue?logo=docker))   ![AWS]\([https://img.shields.io/badge/AWS-EC2-orange?logo=amazonaws](https://img.shields.io/badge/AWS-EC2-orange?logo=amazonaws))   ![GitHub Actions]\([https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-black?logo=githubactions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-black?logo=githubactions)) \</p>
 
 ---
 
@@ -21,9 +12,9 @@
 
 The project aims to support healthcare service-desk workflows through a centralized web application.
 
-It is developed using Java 21 and Spring Boot, with MySQL 8.0 as the database. Docker and Docker Compose are used to containerize and manage the application.
+The backend is developed using Java 21 and Spring Boot, with MySQL 8.0 for database management. Docker and Docker Compose are used to containerize and manage the application and database services.
 
-The application is deployed on Amazon Web Services (AWS) EC2. GitHub Actions automates the build, Docker image publishing, and deployment process.
+The application is deployed on Amazon Web Services (AWS) EC2. GitHub Actions automates the application build, Docker image publishing, and deployment process.
 
 ### Project Objectives
 
@@ -31,13 +22,11 @@ The application is deployed on Amazon Web Services (AWS) EC2. GitHub Actions aut
 - Build the backend using Java 21 and Spring Boot.
 - Integrate MySQL for database management.
 - Containerize the application using Docker.
-- Manage application and database containers using Docker Compose.
+- Manage multiple services using Docker Compose.
 - Automate builds and deployments using GitHub Actions.
 - Publish Docker images to GitHub Container Registry (GHCR).
 - Deploy the application on AWS EC2.
-- Implement secure AWS authentication using GitHub OIDC and IAM.
-
----
+- Use GitHub OIDC for secure AWS authentication.
 
 ## 2. Technology Stack
 
@@ -58,62 +47,55 @@ The application is deployed on Amazon Web Services (AWS) EC2. GitHub Actions aut
 | AWS IAM             | Access management          |
 | AWS STS             | Temporary credentials      |
 | GitHub OIDC         | Secure AWS authentication  |
-| Gmail SMTP          | Email server integration   |
-
----
+| Gmail SMTP          | Email integration          |
 
 ## 3. System Architecture
 
-MediDesk follows a containerized architecture deployed on an AWS EC2 instance.
+MediDesk follows a containerized architecture in which the Spring Boot application and MySQL database run as separate Docker containers.
 
 ### Application Architecture
 
 ```text
-                   USER
-                     |
-                     |
-                Web Browser
-                     |
-                     |
-              HTTP Request
-                     |
-               AWS EC2
-                     |
-                Port 8081
-                     |
-               Docker Engine
-                     |
-              Docker Compose
-                     |
-             +-------+-------+
-             |               |
-             |               |
-        MediDesk App      MySQL 8.0
-        Container         Container
-             |               |
-             |               |
-       Spring Boot       medidesk_db
-        Port 8081         Port 3306
-             |
-             |
-       Application Logic
-             |
-             |
-       Database Queries
+             USER
+               |
+               v
+          Web Browser
+               |
+               v
+           AWS EC2
+               |
+          Port 8081
+               |
+          Docker Engine
+               |
+          Docker Compose
+               |
+        +------+------+
+        |             |
+        v             v
+   MediDesk App    MySQL 8.0
+    Container       Container
+        |             |
+        v             v
+   Spring Boot     medidesk_db
+        |
+        v
+  Application Logic
+        |
+        v
+   Database Queries
 ```
 
 ### Request Flow
 
 1. A user accesses MediDesk through a web browser.
-2. The request reaches the EC2 instance on port 8081.
-3. Docker forwards the request to the Spring Boot application running inside the application container.
+2. The request reaches the application through the configured EC2 endpoint.
+3. Docker forwards the request to the Spring Boot application.
 4. Spring Boot processes the request.
-5. The application communicates with MySQL through the internal Docker Compose network.
-6. The application returns the response to the user.
+5. The application communicates with MySQL through the internal Docker network.
+6. The response is returned to the user.
 
-**Important:** The MySQL database is not published on a public host port. It communicates with the application through the internal Docker network.
-
----
+**Note:** MySQL is not published on a public host port. It communicates with the application through the Docker Compose network.
 
 ## 4. Project Structure
 
@@ -148,24 +130,21 @@ MediDesk/
 
 ### Important Files
 
-| File                 | Description                                          |
-| -------------------- | ---------------------------------------------------- |
-| `src/`               | Contains application source code and resources       |
-| `.github/workflows/` | Contains GitHub Actions workflow                     |
-| `.mvn/wrapper/`      | Maven Wrapper configuration                          |
-| `Dockerfile`         | Defines the application Docker image                 |
-| `docker-compose.yml` | Defines application and database services            |
-| `pom.xml`            | Maven dependencies and build configuration           |
-| `mvnw`               | Maven Wrapper for Linux/macOS                        |
-| `mvnw.cmd`           | Maven Wrapper for Windows                            |
-| `.dockerignore`      | Excludes unnecessary files from Docker build context |
-| `.gitignore`         | Excludes unnecessary files from Git tracking         |
-
----
+| File                 | Description                                |
+| -------------------- | ------------------------------------------ |
+| `src/`               | Application source code and resources      |
+| `.github/workflows/` | GitHub Actions workflow                    |
+| `Dockerfile`         | Defines the application Docker image       |
+| `docker-compose.yml` | Defines application and database services  |
+| `pom.xml`            | Maven dependencies and build configuration |
+| `mvnw`               | Maven Wrapper for Linux/macOS              |
+| `mvnw.cmd`           | Maven Wrapper for Windows                  |
+| `.dockerignore`      | Excludes unnecessary Docker build files    |
+| `.gitignore`         | Excludes unnecessary Git files             |
 
 ## 5. Prerequisites
 
-Install the following before running MediDesk:
+Install the following tools before running MediDesk:
 
 - Java Development Kit (JDK) 21
 - Git
@@ -176,21 +155,10 @@ Verify the installations:
 
 ```bash
 java -version
-```
-
-```bash
 git --version
-```
-
-```bash
 docker --version
-```
-
-```bash
 docker compose version
 ```
-
----
 
 ## 6. Local Installation and Setup
 
@@ -220,24 +188,24 @@ MAIL_USERNAME=your_email@gmail.com
 MAIL_PASSWORD=your_gmail_app_password
 ```
 
-These variables are used by Docker Compose to configure the database and SMTP email service.
+These environment variables configure the MySQL database and Gmail SMTP integration.
 
-**Security Note:**
+**Security Notes:**
 
 - Never commit the `.env` file to GitHub.
-- Use a Gmail App Password for SMTP authentication rather than your normal Gmail account password.
-- Enable two-step verification on the Gmail account before generating an App Password.
+- Use a Gmail App Password for SMTP authentication.
 - Use strong database passwords.
+- Keep all credentials private.
 
 ### Step 3: Build the Application
 
-On Windows:
+**Windows:**
 
 ```bash
 mvnw.cmd clean package -DskipTests
 ```
 
-On Linux/macOS:
+**Linux/macOS:**
 
 ```bash
 chmod +x mvnw
@@ -246,13 +214,11 @@ chmod +x mvnw
 
 This command compiles the application and generates the build artifact.
 
-**Note:** Automated tests are currently skipped because the build command includes `-DskipTests`.
+**Note:** Automated tests are currently skipped because the build command uses `-DskipTests`.
 
 ### Step 4: Start Docker Containers
 
 Make sure Docker Desktop or Docker Engine is running.
-
-Execute:
 
 ```bash
 docker compose up -d --build
@@ -285,29 +251,21 @@ Open your browser:
 http://localhost:8081
 ```
 
-The application is mapped from host port 8081 to container port 8081.
-
----
+The application uses host port 8081 mapped to container port 8081.
 
 ## 7. Docker Implementation
 
-Docker is used to package MediDesk into a portable container.
-
-The project uses Docker Compose to manage the application and database services.
+Docker packages MediDesk into a portable container, while Docker Compose manages the application and database services.
 
 ### Application Container
-
-The application container:
 
 - Runs the Spring Boot application.
 - Uses Java 21.
 - Listens on port 8081.
 - Communicates with MySQL through the Docker network.
-- Stores uploaded files using a persistent directory mount.
+- Uses a persistent directory mount for uploaded files.
 
 ### Database Container
-
-The database container:
 
 - Uses the official MySQL 8.0 image.
 - Creates the `medidesk_db` database.
@@ -317,18 +275,16 @@ The database container:
 
 ### Persistent Storage
 
-MediDesk uses two types of persistent storage:
-
-**1. MySQL Named Volume**
+**MySQL Named Volume**
 
 ```yaml
 volumes:
   - medidesk_mysql_data:/var/lib/mysql
 ```
 
-This keeps database files persistent even when containers are recreated.
+This keeps database files persistent when containers are recreated.
 
-**2. Application Upload Volume**
+**Application Upload Volume**
 
 ```yaml
 volumes:
@@ -363,7 +319,7 @@ Check running containers:
 docker ps
 ```
 
-View images:
+View Docker images:
 
 ```bash
 docker images
@@ -381,36 +337,28 @@ View database logs:
 docker logs medidesk-db
 ```
 
-**Note:** `docker compose down` does not remove named volumes by default. Avoid `docker compose down -v` unless you intentionally want to delete the database volume.
-
----
+**Important:** Avoid `docker compose down -v` unless you intentionally want to delete the named database volume and its stored data.
 
 ## 8. Email Configuration
 
 MediDesk uses Gmail SMTP for email communication.
 
-The Docker Compose configuration uses the following SMTP settings:
+| Setting        | Configuration                      |
+| -------------- | ---------------------------------- |
+| SMTP Host      | smtp.gmail.com                     |
+| SMTP Port      | 587                                |
+| Authentication | Enabled                            |
+| STARTTLS       | Enabled                            |
+| Username       | Configured through `MAIL_USERNAME` |
+| Password       | Configured through `MAIL_PASSWORD` |
 
-| Variable            | Value                            |
-| ------------------- | -------------------------------- |
-| SMTP Host           | smtp.gmail.com                   |
-| SMTP Port           | 587                              |
-| SMTP Authentication | Enabled                          |
-| STARTTLS            | Enabled                          |
-| Username            | Configured through MAIL_USERNAME |
-| Password            | Configured through MAIL_PASSWORD |
-
-Credentials are supplied through environment variables instead of being directly written into the Docker Compose file.
-
-This approach keeps sensitive email credentials outside the application source code.
-
----
+Credentials are supplied through environment variables rather than being directly written into the Docker Compose file.
 
 ## 9. AWS Cloud Deployment
 
 MediDesk is deployed on Amazon EC2 in the AWS Mumbai region.
 
-**AWS Region:** ap-south-1
+**AWS Region:** `ap-south-1`
 
 ### AWS Services Used
 
@@ -440,9 +388,9 @@ Stores Docker images published by the CI/CD pipeline.
 
 ### Deployment Process
 
-1. Developer pushes code to the main branch.
+1. Developer pushes code to the `main` branch.
 2. GitHub Actions builds the Spring Boot application.
-3. Docker creates the application image.
+3. Docker builds the application image.
 4. The image is published to GHCR.
 5. GitHub Actions obtains temporary AWS credentials using OIDC.
 6. AWS Systems Manager receives the deployment command.
@@ -450,13 +398,11 @@ Stores Docker images published by the CI/CD pipeline.
 8. Docker Compose updates the application container.
 9. GitHub Actions checks the remote command result.
 
----
-
 ## 10. CI/CD Pipeline Using GitHub Actions
 
-MediDesk implements CI/CD using GitHub Actions.
+MediDesk implements Continuous Integration and Continuous Deployment (CI/CD) using GitHub Actions.
 
-The workflow is triggered by:
+### Workflow Triggers
 
 - Push events on the `main` branch.
 - Pull requests targeting the `main` branch.
@@ -465,7 +411,7 @@ The workflow is triggered by:
 
 **Stage 1: Source Code Checkout**
 
-GitHub Actions downloads the latest repository code using the checkout action.
+GitHub Actions downloads the latest repository code.
 
 **Stage 2: Java Setup**
 
@@ -473,7 +419,7 @@ The workflow configures Java 21 using Eclipse Temurin.
 
 **Stage 3: Maven Build**
 
-Maven Wrapper builds the application using:
+Maven Wrapper builds the application:
 
 ```bash
 ./mvnw --batch-mode --no-transfer-progress package -DskipTests
@@ -485,7 +431,7 @@ Docker Buildx is configured to build the application image.
 
 **Stage 5: GHCR Authentication**
 
-On pushes to the main branch, GitHub Actions logs into GitHub Container Registry using `GITHUB_TOKEN`.
+On pushes to the `main` branch, GitHub Actions logs into GitHub Container Registry using `GITHUB_TOKEN`.
 
 **Stage 6: Docker Image Publishing**
 
@@ -505,9 +451,9 @@ GitHub Actions uses OIDC to obtain temporary AWS credentials by assuming the con
 
 **Stage 8: AWS Systems Manager Deployment**
 
-AWS Systems Manager sends commands to the EC2 instance to pull the application image and update the application container through Docker Compose.
+AWS Systems Manager sends commands to the EC2 instance to pull the application image and update the application through Docker Compose.
 
-**Stage 9: Deployment Verification**
+**Stage 9: Deployment Status Check**
 
 The workflow checks the remote SSM command status and reports success or failure.
 
@@ -535,28 +481,28 @@ The workflow checks the remote SSM command status and reports success or failure
     Docker Buildx Setup
            |
            v
-      Build Image
+       Build Image
            |
            v
-       Publish to GHCR
+      Publish to GHCR
            |
            v
-    GitHub OIDC Authentication
+   GitHub OIDC Authentication
            |
            v
-      AWS IAM Role
+       AWS IAM Role
            |
            v
-     AWS Systems Manager
+    AWS Systems Manager
            |
            v
-        AWS EC2
+         AWS EC2
            |
            v
-       Pull Image
+        Pull Image
            |
            v
-    Docker Compose Update
+   Docker Compose Update
            |
            v
    Deployment Status Check
@@ -569,9 +515,7 @@ The workflow checks the remote SSM command status and reports success or failure
 | Push to main         | Yes   | Yes           | Yes           |
 | Pull request to main | Yes   | No            | No            |
 
-**Current Limitation:** The Maven build skips automated tests. A separate testing stage and post-deployment health check are recommended future improvements.
-
----
+**Current Limitation:** The Maven build skips automated tests. A separate testing stage and post-deployment health check are recommended improvements.
 
 ## 11. Security Implementation
 
@@ -586,21 +530,17 @@ The project follows several security practices:
 
 Sensitive values such as passwords and AWS credentials should never be committed to the public repository.
 
----
-
 ## 12. Current Limitations
 
-The current implementation is suitable for demonstrating DevOps and cloud deployment, but it has some limitations:
+The current implementation has some limitations:
 
 1. The application runs on a single EC2 instance.
 2. High availability and multi-instance deployment are not configured.
 3. Automated tests are skipped during the Maven build.
-4. Post-deployment health checks are not implemented.
+4. Post-deployment application health checks are not implemented.
 5. The public application endpoint currently uses HTTP.
 6. Database backup and restoration procedures need further improvement.
 7. A managed database service is not currently used.
-
----
 
 ## 13. Future Enhancements
 
@@ -617,16 +557,12 @@ The following improvements can make MediDesk more scalable, secure, and reliable
 - Add Docker image vulnerability scanning.
 - Consider Kubernetes/EKS if future project requirements justify it.
 
----
-
 ## 14. Project Contributors
 
 | Name         | Contribution        |
 | ------------ | ------------------- |
 | Kumar Ankit  | Project Contributor |
 | Gaurav Yadav | Project Contributor |
-
----
 
 ## 15. Learning Outcomes
 
@@ -649,7 +585,5 @@ Through this project, we gained practical experience in:
 ## License
 
 This project is developed for academic and educational purposes.
-
----
 
 \<p align="center">   \<strong>MediDesk\</strong>\<br>   Building and Deploying Healthcare Applications with DevOps and Cloud Computing. \</p>
